@@ -53,7 +53,7 @@ int main(void) {
 		if(prank == 0)
 		{
 			MPI_Recv(gret, MAX_STRING, MPI_CHAR, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-			source = index_buff[i];
+			source = index_buff[0]++;
 			mess_buffer[0][source][0] = gret[0];
 			mess_buffer[0][source][1] = gret[1];
 			//printf("[PROC %d] Process %d recieved message from %d process, message: %s\n", prank, prank, i, gret);
@@ -94,7 +94,7 @@ int main(void) {
 			printf("Process %d recieved: ", i);
 			for(int j = 0; j < csize - 1; j++)
 			{
-				printf("%c%c", mess_buffer[i][j][0], mess_buffer[i][j][1]);
+				printf("%c%c ", mess_buffer[i][j][0], mess_buffer[i][j][1]);
 			}
 			printf("\n");
 		}
