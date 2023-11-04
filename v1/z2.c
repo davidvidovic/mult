@@ -52,15 +52,15 @@ int main(int argc,char* argv[])
 	}	
 	else
 	{
-		start = prank * block_size + 1;
+		start = workers * block_size + (prank - workers) * (block_size - 1) + 1;
 		end = start + block_size - 1;
 	}
 	
 	for(int i = start; i < end; i++)
 	{
-		// printf("[PROC %d] Sum is %.1f. Adding %d. ", prank, sum, i);
+		printf("[PROC %d] Sum is %.1f. Adding %d. ", prank, sum, i);
 		sum += i;
-		// printf("Sum is now %.1f\n", sum);
+		printf("Sum is now %.1f\n", sum);
 	}
 	
 	double tsum;
