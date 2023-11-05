@@ -7,7 +7,7 @@
 # echo "Compiling $1..."
 mpic++ z4.cpp -o exe 
 # echo "Executing..."
-mpiexec exe $1 input_vector.txt input_matrix.txt $2
+mpiexec -n $1 exe input_vector.txt input_matrix.txt $2
 rm exe
 g++ seq.cpp -o exe
 ./exe input_vector.txt input_matrix.txt

@@ -45,7 +45,7 @@ double* loadMat(char* fname, int n, int dim_true)
 		
 	}
 
-	/*
+	/*	
 	for(int i = 0; i < n*n; i++)
 	{
 		if(i % n == 0) printf("\n");
@@ -99,8 +99,9 @@ int main(int argc, char* argv[])
 	MPI_Comm_size(MPI_COMM_WORLD, &csize);
 	MPI_Comm_rank(MPI_COMM_WORLD, &prank);
 
-	char* vfname = argv [2];
-	char* mfname = argv [3];
+	char* vfname = argv [1];
+	char* mfname = argv [2];
+	
 
 	int dim;
 	double* mat;
@@ -109,8 +110,8 @@ int main(int argc, char* argv[])
 	double* lres;
 	double* res;
 	
-	generateVec(vfname, atoi(argv[4]));
-	generateMat(mfname, atoi(argv[4]));
+	generateVec(vfname, atoi(argv[3]));
+	generateMat(mfname, atoi(argv[3]));
 
 	double start = MPI_Wtime();
 	

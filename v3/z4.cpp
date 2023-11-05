@@ -31,23 +31,27 @@ double* loadMat(char* fname, int n, int dim_true)
 	FILE* f = fopen(fname, "r");
 	double* res = new double [n*n];
 	double* it = res;
-	while(fscanf(f, "%lf", it++) != EOF);
+	int cnt = 0;
 	
-	for(int i = 0; i < n; i++)
+	while(fscanf(f, "%lf", it++) != EOF)
 	{
-		for(int j = 0; j < n; j++)
+		cnt++;
+		while(cnt >= dim_true && cnt < n) 
 		{
-			if(j < dim_true)
-			{
-				fscanf(f, "%lf", it++);
-			}
-			else
-			{
-				it = 0;
-				it++;
-			}
+			it++;
+			cnt++;
+			if(cnt == n) cnt = 0; 
 		}
+		
 	}
+
+	/*
+	for(int i = 0; i < n*n; i++)
+	{
+		if(i % n == 0) printf("\n");
+		printf("%.0f ", res[i]);
+	}
+	*/
 	
 	fclose(f);
 	return res;
@@ -64,6 +68,7 @@ void logRes(const char* fname, double* res, int n)
 
 int main(int argc, char* argv[]) 
 {
+	
 	int csize, prank;
 	int dim_true, temp_dim;
 		
@@ -71,8 +76,8 @@ int main(int argc, char* argv[])
 	MPI_Comm_size(MPI_COMM_WORLD, &csize);
 	MPI_Comm_rank(MPI_COMM_WORLD, &prank);
 
-	char* vfname = argv [2];
-	char* mfname = argv [3];
+	char* vfname = argv [1];
+	char* mfname = argv [2];
 
 	int dim;
 	double* mat;
@@ -143,7 +148,7 @@ int main(int argc, char* argv[])
 	
 	if (prank == 0)
 	{
-		logRes("res.txt", res, dim);
+		logRes("res.txt", res, dim_true);
 	}
 	
 	if (prank == 0)
